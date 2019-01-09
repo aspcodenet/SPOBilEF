@@ -13,5 +13,6 @@ namespace Bil.Models
         public int Year { get; set; }
         public string Color { get; set; }
         public decimal Price { get; set; }
+        public int NumberOfWheels { get; set; }
     }
 }

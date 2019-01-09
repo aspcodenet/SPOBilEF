@@ -67,6 +67,7 @@ namespace Bil.Controllers
                     Color = bil.Color,
                     Manufacturer = bil.Manufacturer,
                     Modell = bil.Model,
+                    NumberOfWheels = bil.NumberOfWheels,
                     //Price = bil.Price,
                     Year = bil.Year,
                     Id = bil.Id
@@ -78,40 +79,42 @@ namespace Bil.Controllers
 
 
 
-        //[HttpGet]
-        //public ActionResult Search(string SearchManufacturer, string SearchYear)
-        //{
-        //    var db = new Models.DBContext();
-        //    var model = new ViewModels.BilIndexViewModel
-        //    {
-        //        SearchManufacturer = SearchManufacturer,
-        //        SearchYear = SearchYear
-        //    };
-        //    model.Cars.AddRange(db.GetAll().Select(r => new ViewModels.BilIndexViewModel.BilListViewModel
-        //    {
-        //        Manufacturer = r.Manufacturer,
-        //        Model = r.Model,
-        //        Year = r.Year,
-        //        Id = r.Id
-        //    }).Where(c=> Matches(c, SearchManufacturer, SearchYear)
-        //        ));
+        [HttpGet]
+        public ActionResult Search(string SearchManufacturer, string SearchYear)
+        {
+            using (var db = new Models.BilModel2())
+            {
+                var model = new ViewModels.BilIndexViewModel
+                {
+                    SearchManufacturer = SearchManufacturer,
+                    SearchYear = SearchYear
+                };
+                model.Cars.AddRange(db.Bilar.ToList().Select(r => new ViewModels.BilIndexViewModel.BilListViewModel
+                {
+                    Manufacturer = r.Manufacturer,
+                    Model = r.Model,
+                    Year = r.Year,
+                    Id = r.Id
+                }).Where(c => Matches(c, SearchManufacturer, SearchYear)
+                    ));
 
-        //    return View("Index",    model);
-        //}
+                return View("Index", model);
+            }
+        }
 
-        //bool Matches(ViewModels.BilIndexViewModel.BilListViewModel bil, string SearchManufacturer, string SearchYear )
-        //{
-        //    if (!string.IsNullOrEmpty(SearchManufacturer))
-        //    {
-        //        SearchManufacturer = SearchManufacturer.ToLower();
-        //        if (!bil.Manufacturer.ToLower().Contains(SearchManufacturer)) return false;
-        //    }
-        //    if (!string.IsNullOrEmpty(SearchYear))
-        //    {
-        //        if (!bil.Year.ToString().Contains(SearchYear)) return false;
-        //    }
-        //    return true;
-        //}
+        bool Matches(ViewModels.BilIndexViewModel.BilListViewModel bil, string SearchManufacturer, string SearchYear)
+        {
+            if (!string.IsNullOrEmpty(SearchManufacturer))
+            {
+                SearchManufacturer = SearchManufacturer.ToLower();
+                if (!bil.Manufacturer.ToLower().Contains(SearchManufacturer)) return false;
+            }
+            if (!string.IsNullOrEmpty(SearchYear))
+            {
+                if (!bil.Year.ToString().Contains(SearchYear)) return false;
+            }
+            return true;
+        }
 
         [HttpPost]
         public ActionResult Edit(ViewModels.BilEditViewModel model)
@@ -127,6 +130,7 @@ namespace Bil.Controllers
                 bil.Model = model.Modell;
                 //bil.Price = model.Price;
                 bil.Year = model.Year;
+                bil.NumberOfWheels = model.NumberOfWheels;
                 bil.Color = model.Color;
                 db.SaveChanges();
             }
