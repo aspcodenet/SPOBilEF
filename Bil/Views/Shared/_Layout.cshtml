@@ -31,6 +31,12 @@
         @RenderBody()
         <hr />
         <footer>
+            @using(Html.BeginForm("Search","Bil", FormMethod.Get))
+            {
+                @Html.TextBox("q", Request.QueryString["q"]);
+                //<input type="text" value="@Request.QueryString["q"]" name="q" />
+                <input type="submit" value="Sök" />
+            }
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>

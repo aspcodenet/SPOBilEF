@@ -11,9 +11,28 @@
 </p>
 <table class="table">
     <tr>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>
+            @if (Model.CurrentSort == "NamnAsc")
+            {
+                @Html.ActionLink("Namn DESC", "Index", new { sort = "NamnDesc" })
+            }
+            else
+            {
+                @Html.ActionLink("Namn ASC", "Index", new { sort = "NamnAsc" })
+            }
+
+        </th>
+        <th>
+            @if (Model.CurrentSort == "YearAsc")
+            {
+                @Html.ActionLink("Year DESC", "Index", new { sort = "YearDesc" })
+            }
+            else
+            {
+                @Html.ActionLink("Year ASC", "Index", new { sort = "YearAsc" })
+            }
+        </th>
+        <th>.</th>
     </tr>
 
     @foreach (var item in Model.Cars)
@@ -31,7 +50,7 @@
 </table>
 
 
-<h1>Sök</h1>
+@*<h1>Sök</h1>
 @using (Html.BeginForm("Search", "Bil",FormMethod.Get))
 {
     <table class="table">
@@ -55,4 +74,4 @@
     </table>
     <input type="submit" value="Sök" />
 
-}
+}*@

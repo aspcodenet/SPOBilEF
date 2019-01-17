@@ -22,5 +22,9 @@ namespace Bil.ViewModels
             public int Year { get; set; }
         }
         public List<BilListViewModel> Cars { get; set; }
+
+
+        public string CurrentSort { get; set; }
+
     }
 }

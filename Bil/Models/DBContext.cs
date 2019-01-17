@@ -14,7 +14,7 @@ namespace Bil.Models
     //        return GetAll().FirstOrDefault(r => r.Id == id);
     //    }
 
-    //    public List<Bil> GetAll()
+    //    public List<Bil> Bilar
     //    {
     //        if(cars == null)
     //        {

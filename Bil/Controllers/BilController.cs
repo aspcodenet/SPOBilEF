@@ -9,23 +9,64 @@ namespace Bil.Controllers
     public class BilController : Controller
     {
         // GET: Bil
-        public ActionResult Index()
+        public ActionResult Index(string sort)
         {
             var model = new ViewModels.BilIndexViewModel();
             using (var db = new Models.BilModel2())
             {
-                model.Cars.AddRange(db.Bilar.Select(r => new ViewModels.BilIndexViewModel.BilListViewModel
-                {
-                    Manufacturer = r.Manufacturer,
-                    Model = r.Model,
-                    Year = r.Year,
-                    Id = r.Id
-                }));
-            }
+                //var carsFromDB = db.Bilar.AsQueryable();
+                //if (sort == "NamnAsc")
+                //    carsFromDB = carsFromDB.OrderBy(r => r.Manufacturer);
+                //else if (sort == "NamnDesc")
+                //    carsFromDB = carsFromDB.OrderByDescending(r => r.Manufacturer);
+
+
+                //if (sort == "YearAsc")
+                //    carsFromDB = carsFromDB.OrderBy(r => r.Year);
+                //else if (sort == "YearDesc")
+                //    carsFromDB = carsFromDB.OrderByDescending(r => r.Year);
+
+                //model.Cars.AddRange(carsFromDB.Select( r => new ViewModels.BilIndexViewModel.BilListViewModel
+                //{
+                //    Manufacturer = r.Manufacturer,
+                //    Model = r.Model,
+                //    Year = r.Year,
+                //    Id = r.Id
+                //}));
+
+
+
+
+            model.Cars.AddRange(db.Bilar.Select(r => new ViewModels.BilIndexViewModel.BilListViewModel
+            {
+                Manufacturer = r.Manufacturer,
+                Model = r.Model,
+                Year = r.Year,
+                Id = r.Id
+            }));
+
+            if (sort == "NamnAsc")
+                model.Cars = model.Cars.OrderBy(r=>r.Manufacturer).ToList();
+            else if (sort == "NamnDesc")
+                model.Cars = model.Cars.OrderByDescending(r => r.Manufacturer).ToList();
+
+
+            if (sort == "YearAsc")
+                model.Cars = model.Cars.OrderBy(r => r.Year).ToList();
+            else if (sort == "YearDesc")
+                model.Cars = model.Cars.OrderByDescending(r => r.Year).ToList();
+
+
+            model.CurrentSort = sort;
+
             return View(model);
         }
 
 
+        public ActionResult Test()
+        {
+            return View();
+        }
 
         [HttpGet]
         public ActionResult Create()
@@ -139,6 +180,11 @@ namespace Bil.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult Search(string q)
+        {
+            return View();
+        }
 
         public ActionResult View(int id)
         {

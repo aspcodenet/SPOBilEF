@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+}
+
+<div class="readout">
+    <h3>What's in the model?</h3>
+    <table>
+        <tr>
+            <td>Namn value:</td>
+            <td data-bind="text: namn"></td>
+        </tr>
+        <tr>
+            <td>Is cool</td>
+            <td data-bind='text: isCool() ? "True" : "False"'></td>
+        </tr>
+        <tr>
+            <td>Selected option:</td>
+            <td data-bind="text: selectedOptionValue"></td>
+        </tr>
+        <tr>
+            <td>Multi-selected options:</td>
+            <td data-bind="text: multipleSelectedOptionValues"></td>
+        </tr>
+        <tr>
+            <td>Radio button selection:</td>
+            <td data-bind="text: radioSelectedOptionValue"></td>
+        </tr>
+    </table>
+</div>
+
+<h3>HTML controls</h3>
+<table>
+    <tr>
+        <td ">Namn value (updates on change):</td>
+        <td><input data-bind="value: namn" /></td>
+    </tr>
+    <tr>
+        <td>Namn value (updates on keystroke):</td>
+        <td><input data-bind='value: namn, valueUpdate: "afterkeydown"' /></td>
+    </tr>
+    <tr>
+        <td>Is cool:</td>
+        <td><input type="checkbox" data-bind="checked: isCool" /></td>
+    </tr>
+    <tr>
+        <td class="label">Drop-down list:</td>
+        <td><select data-bind="options: optionValues, value: selectedOptionValue"></select></td>
+    </tr>
+    <tr>
+        <td class="label">Multi-select drop-down list:</td>
+        <td><select multiple="multiple" data-bind="options: optionValues, selectedOptions: multipleSelectedOptionValues"></select></td>
+    </tr>
+    <tr>
+        <td class="label">Radio buttons:</td>
+        <td>
+            <label><input type="radio" value="Alpha" data-bind="checked: radioSelectedOptionValue" />Alpha</label>
+            <label><input type="radio" value="Beta" data-bind="checked: radioSelectedOptionValue" />Beta</label>
+            <label><input type="radio" value="Gamma" data-bind="checked: radioSelectedOptionValue" />Gamma</label>
+        </td>
+    </tr>
+
+
+
+</table>
+
+<button data-bind='click: registerClick, disable: hasClicked'>Click me - possible once</button>
+
+
+@section Scripts
+{
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var viewModel = {
+                hasClicked: ko.observable(false),
+                namn: ko.observable("Stefan Holmberg"),
+                isCool: ko.observable(true),
+                optionValues: ["Alpha", "Beta", "Gamma"],
+                selectedOptionValue: ko.observable("Gamma"),
+                multipleSelectedOptionValues: ko.observable(["Alpha"]),
+                radioSelectedOptionValue: ko.observable("Beta"),
+                registerClick: function () {
+                    alert('Test');
+                    this.hasClicked(true);
+                    this.namn("kalle");
+                }
+            };
+            ko.applyBindings(viewModel);
+        });
+    </script>
+}
+

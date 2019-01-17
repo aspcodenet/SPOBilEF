@@ -1,26 +1,22 @@
 ﻿@model Bil.ViewModels.BilCreateViewModel
-
 @{
     ViewBag.Title = "Index";
 }
-
 <p>
     @Html.ActionLink("Tillbaka till lista", "Index", new { })
 </p>
 
-@using (Html.BeginForm(FormMethod.Post))
-{
-    <table class="table">
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <table class="table">
         <tr>
             <th></th>
             <th></th>
         </tr>
-
         <tr>
             <td>Tillverkare</td>
             <td>
                 @Html.TextBoxFor(model => model.Manufacturer)
-
                 @Html.ValidationMessageFor(model => model.Manufacturer)
             </td>
         </tr>
@@ -46,13 +42,13 @@
             </td>
         </tr>
         @*<tr>
-            <td>Pris</td>
-            <td>
-                @Html.TextBoxFor(p => p.Price)
-                @Html.ValidationMessageFor(p => p.Price)
-            </td>
-        </tr>*@
-    </table>
-    <input type="submit" value="Spara" />
+                <td>Pris</td>
+                <td>
+                    @Html.TextBoxFor(p => p.Price)
+                    @Html.ValidationMessageFor(p => p.Price)
+                </td>
+            </tr>*@
+        </table>
+        <input type="submit" value="Spara" />
 
-}
+    }
