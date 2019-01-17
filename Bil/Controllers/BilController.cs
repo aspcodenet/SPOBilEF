@@ -37,29 +37,30 @@ namespace Bil.Controllers
 
 
 
-            model.Cars.AddRange(db.Bilar.Select(r => new ViewModels.BilIndexViewModel.BilListViewModel
-            {
-                Manufacturer = r.Manufacturer,
-                Model = r.Model,
-                Year = r.Year,
-                Id = r.Id
-            }));
+                model.Cars.AddRange(db.Bilar.Select(r => new ViewModels.BilIndexViewModel.BilListViewModel
+                {
+                    Manufacturer = r.Manufacturer,
+                    Model = r.Model,
+                    Year = r.Year,
+                    Id = r.Id
+                }));
 
-            if (sort == "NamnAsc")
-                model.Cars = model.Cars.OrderBy(r=>r.Manufacturer).ToList();
-            else if (sort == "NamnDesc")
-                model.Cars = model.Cars.OrderByDescending(r => r.Manufacturer).ToList();
-
-
-            if (sort == "YearAsc")
-                model.Cars = model.Cars.OrderBy(r => r.Year).ToList();
-            else if (sort == "YearDesc")
-                model.Cars = model.Cars.OrderByDescending(r => r.Year).ToList();
+                if (sort == "NamnAsc")
+                    model.Cars = model.Cars.OrderBy(r => r.Manufacturer).ToList();
+                else if (sort == "NamnDesc")
+                    model.Cars = model.Cars.OrderByDescending(r => r.Manufacturer).ToList();
 
 
-            model.CurrentSort = sort;
+                if (sort == "YearAsc")
+                    model.Cars = model.Cars.OrderBy(r => r.Year).ToList();
+                else if (sort == "YearDesc")
+                    model.Cars = model.Cars.OrderByDescending(r => r.Year).ToList();
 
-            return View(model);
+
+                model.CurrentSort = sort;
+
+                return View(model);
+            }
         }
 
 
